@@ -4,8 +4,9 @@
 
 import unittest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -38,9 +39,10 @@ class testSubmenuOpen(unittest.TestCase):
 
         driver_wait.until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, get_iframe_sub_menu())))
 
-        driver_wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,get_sub_menu("adamsvill")))).click()
+        sum_menu_el = driver_wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,get_sub_menu("adamsvill"))))
+        ActionChains(self.driver).move_to_element(sum_menu_el).perform()
 
-        self.assertTrue(self.driver.find_element_by_css_selector(get_sub_menu("adamsvill")),"not visible")
+        self.assertTrue(self.driver.find_element_by_css_selector(get_sub_menu("adamsvill")).is_displayed(),"not visible")
 
 
 if __name__ == "__main__":
